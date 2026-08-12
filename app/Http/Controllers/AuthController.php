@@ -9,6 +9,9 @@ class AuthController extends Controller
 {
     public function showLogin()
     {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
         return view('auth.login');
     }
 
@@ -16,22 +19,35 @@ class AuthController extends Controller
     {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+            'password' => ['required', 'string'],
+        ],
+            [
+                'email.required' => 'O campo e-mail é obrigatório.',
+                'email.email'   => 'Informe um e-mail válido.',
+                'password.required' => 'O campo senha é obrigatório.',
+            ]);
 
-        if (Auth::attempt([
-            'email' => $credentials['email'],
-            'password' => $credentials['password'],
-            'status' => true,
-        ])) {
-            $request->session()->regenerate();
+        $remember = $request->boolean('remember');
 
-            return redirect()->intended('/dashboard');
+        if (Auth::attempt($credentials, $remember)) {
+            // Verifica se o usuário está ativo logo após autenticar
+
+            if (!Auth::user()->status) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return back()->withErrors([
+                    'email' => 'Seu usuário está inativo. Entre em contato com o administrador.',
+                ])->onlyInput('email');
+            }
+
+            return redirect()->intended(route('dashboard'));
         }
 
         return back()
             ->withErrors([
-                'email' => 'E-mail, senha ou status do usuário inválido.',
+                'email' => 'As credenciais fornecidas não correspondem aos nossos registros.',
             ])
             ->onlyInput('email');
     }
