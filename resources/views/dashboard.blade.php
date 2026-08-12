@@ -2,35 +2,27 @@
 
 @section('content')
 
-    <h1>Dahsboard Administrativo</h1>
+    <div class="col-md-12 mb-4">
+        <h2>Painel Principal</h2>
+        <p class="text-muted">{{ auth()->user()->name }}</p>
+    </div>
 
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5>Animais Cadastrados</h5>
-                    <h2>0</h2>
-                </div>
+    <div class="col-md-4 mb-3">
+        <div class="card text-white bg-primary">
+            <h5 class="card-title">Perfil Atual</h5>
+            <p class="card-text fs-4 fw-bold">{{ ucfirst(auth()->user()->role) }}</p>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Usuários Ativos</h5>
+                <p class="card-text fs-4 fw-bold">{{ $usuariosAtivos }} / {{ $totalUsuarios }}</p>
             </div>
         </div>
+    </div>
 
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5>Consultas Agendadas</h5>
-                    <h2>0</h2>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5>Usuários</h5>
-                    <h2>0</h2>
-                </div>
-            </div>
-        </div>
     </div>
 
 @endsection
