@@ -56,7 +56,7 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-        $request->session()->invalidade();
+        $request->session()->invalidate();
         $request->session()->regenarateToken();
 
         return redirect()->route('login');

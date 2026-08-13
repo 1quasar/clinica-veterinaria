@@ -7,7 +7,7 @@
 
 <div class="card shadow-sm">
     <div class="card-body">
-        <form method="POST" action="{{ route('usuarios.store') }}">
+        <form method="POST" action="{{ route('users.store') }}">
             @csrf
 
             <div class="row">
@@ -57,7 +57,7 @@
 
             <div class="mt-3">
                 <button type="submit" class="btn btn-primary">Salvar Usuário</button>
-                <a href="{{ route('usuarios.index') }}" class="btn btn-secondary">Cancelar</a>
+                <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
             </div>
         </form>
     </div>

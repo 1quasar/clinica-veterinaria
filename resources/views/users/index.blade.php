@@ -37,11 +37,11 @@
                             </td>
 
                             <td class="text-end">
-                                <a href="{{ route('users.show) }}" class="btn btn-sm btn-info text-white">Ver</a>
+                                <a href="{{ route('users.show', $user) }}" class="btn btn-sm btn-info text-white">Ver</a>
 
-                                 <a href="{{ route('users.edit) }}" class="btn btn-sm btn-warning">Editar</a>
+                                 <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-warning">Editar</a>
 
-                                 @if(auth()-> !== $user->id)
+                                 @if(auth()->user() !== $user->id)
                                     <form action="{{ route('users.destroy', $user) }}"
                                     method="POST" class="d-inline" onsubmit="return confirm('Deseja realmente excluir este usuário?')">
 
