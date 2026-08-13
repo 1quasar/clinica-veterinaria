@@ -9,11 +9,14 @@
 
     <div class="col-md-4 mb-3">
         <div class="card text-white bg-primary">
-            <h5 class="card-title">Perfil Atual</h5>
-            <p class="card-text fs-4 fw-bold">{{ ucfirst(auth()->user()->role) }}</p>
+            <div class="card-body">
+                <h5 class="card-title">Perfil Atual</h5>
+                <p class="card-text fs-4 fw-bold">{{ ucfirst(auth()->user()->role) }}</p>
+            </div>
         </div>
     </div>
 
+    @if(auth()->user()->role === 'admin')
     <div class="col-md-4 mb-3">
         <div class="card text-white bg-success">
             <div class="card-body">
@@ -22,6 +25,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     </div>
 

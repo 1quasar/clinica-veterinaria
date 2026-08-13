@@ -26,9 +26,12 @@ Route::middleware(['auth', 'user.active'])->group(function () {
         ->name('dashboard');
 
     // CRUD de usuários
-    Route::resource('users', UserController::class)->parameters([
-        'users' => 'user',
-    ]);
+    Route::middleware(['role:admin'])->group(function() {
+        Route::resource('users', UserController::class)->parameters([
+                'users' => 'user',
+        ]);
+    });
+   
 });
 
 

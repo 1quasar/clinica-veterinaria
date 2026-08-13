@@ -41,7 +41,7 @@
 
                                  <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-warning">Editar</a>
 
-                                 @if(auth()->user() !== $user->id)
+                                 @if(auth()->user()->id !== $user->id)
                                     <form action="{{ route('users.destroy', $user) }}"
                                     method="POST" class="d-inline" onsubmit="return confirm('Deseja realmente excluir este usuário?')">
 

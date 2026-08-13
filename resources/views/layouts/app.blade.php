@@ -12,6 +12,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <div class="container-fluid">
             <a class="navbar-brand fw-bold" href="{{ route('dashboard') }}">Clínica Vet</a>
+            @if(auth()->check())
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -21,9 +22,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
                     </li>
+                    @if(auth()->user()->role === 'admin')
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('users.index') }}">Usuários</a>
                     </li>
+                    @endif
                 </ul>
 
                 @auth
@@ -48,6 +51,7 @@
                 </div>
                 @endauth
             </div>
+            @endif
         </div>
     </nav>
 

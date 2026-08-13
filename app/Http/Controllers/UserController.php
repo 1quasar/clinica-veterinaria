@@ -31,7 +31,7 @@ class UserController extends Controller
         ]);
 
         return redirect()
-            ->route('user.index')
+            ->route('users.index')
             ->with('success', 'Usuário cadastrado com sucesso!');
     }
 
