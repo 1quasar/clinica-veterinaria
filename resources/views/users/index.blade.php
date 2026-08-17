@@ -8,6 +8,16 @@
     <a href="{{ route('users.create') }}" class="btn btn-primary">Novo Usuário</a>
 </div>
 
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <form action="{{ route('users.index') }}" method="GET" class="d-flex gap-2">
+            <input type="text" name="search" class="form-control" placeholder="Pesquisar por nome ou e-mail..." value="{{ $search ?? '' }}">
+            <button class="btn btn-secondary" type="submit">Pesquisar</button>
+            <a href="{{ route('users.index') }}" class="btn btn-outline-secondary">Limpar</a>
+        </form>
+    </div>
+</div>
+
 <div class="card shadow-sm">
     <div class="card-body p-0">
         <div class="table-responsive">

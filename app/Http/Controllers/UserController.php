@@ -9,10 +9,20 @@ use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderBy('name', 'asc')->paginate(10);
-        return view('users.index', compact('users'));
+        $search = $request->get('search');
+
+        $users = User::query()
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            })
+            ->orderBy('name', 'asc')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('users.index', compact('users', 'search'));
     }
 
     public function create()
