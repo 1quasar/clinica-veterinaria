@@ -23,6 +23,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('tutors.index') }}">Tutores</a>
+                    </li>
+
                     @if(auth()->user()->role === 'admin')
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('users.index') }}">Usuários</a>
