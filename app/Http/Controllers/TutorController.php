@@ -3,62 +3,87 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Tutor;
+use App\Http\Requests\TutorRequest;
 
 class TutorController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     *  Lista os tutores com paginação e barra de pesquisa
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->get('search');
+
+        $tutors = Tutor::query()
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'like', '%{$search}%')
+                    ->orWhere('cpf', 'like', '%{$search}%');
+            })
+            ->orderBy('name', 'asc')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('tutors.index', compact('tutors', 'search'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Mostra o formulário de cadastro
      */
     public function create()
     {
-        //
+        return view('tutors.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Salva os dados validados no banco
      */
-    public function store(Request $request)
+    public function store(TutorRequest $request)
     {
-        //
+        Tutor::create($request->validated());
+
+        return redirect()
+            ->route('tutors.index')
+            ->with('success', 'Tutor cadastrado com sucesso!');
     }
 
     /**
-     * Display the specified resource.
+     * Mostra detalhes de um Tutor
      */
-    public function show(string $id)
+    public function show(Tutor $tutor)
     {
-        //
+        return view('tutors.show', ['tutor' => $tutor]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Mostra o formulário de edição
      */
-    public function edit(string $id)
+    public function edit(Tutor $tutor)
     {
-        //
+        return view('tutors.edit', ['tutor' => $tutor]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Atualiza os dados validados no banco
      */
-    public function update(Request $request, string $id)
+    public function update(TutorRequest $request, Tutor $tutor)
     {
-        //
+        $tutor->update($request->validated());
+
+        return redirect()
+            ->route('tutors.index')
+            ->with('success', 'Tutor atualizado com sucesso!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Tutor $tutor)
     {
-        //
+        $tutor->delete();
+
+        return redirect()
+            ->route('tutors.index')
+            ->with('success', 'Tutor excluído com sucesso!');
     }
 }

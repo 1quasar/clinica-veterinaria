@@ -53,7 +53,7 @@
 
                                  @if(auth()->user()->id !== $user->id)
                                     <form action="{{ route('users.destroy', $user) }}"
-                                    method="POST" class="d-inline" onsubmit="return confirm('Deseja realmente excluir este usuário?')">
+                                    method="POST" class="d-inline form-delete">
 
                                         @csrf
                                         @method('DELETE')

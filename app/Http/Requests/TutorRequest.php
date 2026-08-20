@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class TutorRequest extends FormRequest
 {
@@ -23,11 +24,18 @@ class TutorRequest extends FormRequest
      */
     public function rules(): array
     {
-        $tutorId = $this->route('tutor');
+        $tutor = $this->route('tutor');
+
+        $tutorId = $tutor ? $tutor->id : null;
 
         return [
             'name'      => ['required', 'string', 'max:255'],
-            'cpf'       => ['required', 'string', 'max:14', 'unique:tutors,cpf,' . $tutorId],
+            'cpf'       => [
+                'required', 
+                'string', 
+                'max:14', 
+                Rule::unique('tutors', 'cpf')->ignore($tutorId)
+                ],
             'phone'     => ['required', 'string', 'max:20'],
             'address'   => ['nullable', 'string', 'max:255'],
         ];

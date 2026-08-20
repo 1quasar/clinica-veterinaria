@@ -69,6 +69,31 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+
+            const deleteForms = document.querySelectorAll('.form-delete');
+
+            deleteForms.forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    Swal.fire({
+                        title: 'Tem certeza?',
+                        text: 'Deseja excluir esse Tutor permanentemente?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#dc3445',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Sim, excluir!',
+                        cancelButtonText: 'Cancelar',
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+
             @if(session('success'))
                 Swal.fire({
                     icon: 'success',
