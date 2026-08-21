@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TutorController;
+use App\Http\Controllers\AnimalController;
 
 // Redirecionamentos da raiz
 Route::get('/', function () {
@@ -34,6 +35,8 @@ Route::middleware(['auth', 'user.active'])->group(function () {
     });
 
     Route::resource('tutors', TutorController::class);
+
+    Route::resource('animals', AnimalController::class);
    
 });
 

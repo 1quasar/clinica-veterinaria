@@ -25,12 +25,17 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('tutors.index') }}">Tutores</a>
+                        <a class="nav-link {{ request()->routeIs('tutors.*') ? 'active' : '' }}" href="{{ route('tutors.index') }}">Tutores</a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('animals.*') ? 'active' : '' }}" href="{{ route('animals.index') }}">Animais</a>
+                    </li>
+
 
                     @if(auth()->user()->role === 'admin')
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('users.index') }}">Usuários</a>
+                        <a class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">Usuários</a>
                     </li>
                     @endif
                 </ul>
