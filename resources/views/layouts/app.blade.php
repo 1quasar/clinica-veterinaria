@@ -32,6 +32,14 @@
                         <a class="nav-link {{ request()->routeIs('animals.*') ? 'active' : '' }}" href="{{ route('animals.index') }}">Animais</a>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('species.*') ? 'active' : '' }}" href="{{ route('species.index') }}">Espécies</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('races.*') ? 'active' : '' }}" href="{{ route('races.index') }}">Raças</a>
+                    </li>
+
 
                     @if(auth()->user()->role === 'admin')
                     <li class="nav-item">

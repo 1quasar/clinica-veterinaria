@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid px-4">
-    <h1 class="h3 my-4 text-gray-800">Cadastrar Novo Paciente</h1>
+<div class="container my-4">
+    <h2>Cadastrar Novo Paciente</h2>
 
-    <div class="card shadow mb-4">
+    <div class="card mt-3">
         <div class="card-body">
             <form action="{{ route('animals.store') }}" method="POST">
                 @csrf
 
-                <div class="row g-3">
+                <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="tutor_id" class="form-label">Tutor Responsável <span class="text-danger">*</span></label>
                         <select name="tutor_id" id="tutor_id" class="form-select @error('tutor_id') is-invalid @enderror" required>
@@ -20,33 +20,41 @@
                                 </option>
                             @endforeach
                         </select>
-                        @error('tutor_id')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        @error('tutor_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
                     <div class="col-md-6">
                         <label for="name" class="form-label">Nome do Pet <span class="text-danger">*</span></label>
                         <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" required>
-                        @error('name')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="specie_id" class="form-label">Espécie <span class="text-danger">*</span></label>
+                        <select name="specie_id" id="specie_id" class="form-select @error('specie_id') is-invalid @enderror" required>
+                            <option value="">-- Selecione a Espécie --</option>
+                            @foreach($species as $specie)
+                                <option value="{{ $specie->id }}" {{ old('specie_id') == $specie->id ? 'selected' : '' }}>
+                                    {{ $specie->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('specie_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
                     <div class="col-md-4">
-                        <label for="specie" class="form-label">Espécie <span class="text-danger">*</span></label>
-                        <input type="text" name="specie" id="specie" class="form-control @error('specie') is-invalid @enderror" value="{{ old('specie') }}" placeholder="Ex: Cão, Gato, Ave" required>
-                        @error('specie')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="col-md-4">
-                        <label for="race" class="form-label">Raça</label>
-                        <input type="text" name="race" id="race" class="form-control @error('race') is-invalid @enderror" value="{{ old('race') }}" placeholder="Ex: Labrador, SRD">
-                        @error('race')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <label for="race_id" class="form-label">Raça</label>
+                        <select name="race_id" id="race_id" class="form-select @error('race_id') is-invalid @enderror">
+                            <option value="">-- Selecione a Raça --</option>
+                            @foreach($races as $race)
+                                <option value="{{ $race->id }}" {{ old('race_id') == $race->id ? 'selected' : '' }}>
+                                    {{ $race->name }} ({{ $race->specie->name }})
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('race_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
                     <div class="col-md-4">
@@ -56,43 +64,34 @@
                             <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Macho</option>
                             <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Fêmea</option>
                         </select>
-                        @error('gender')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        @error('gender')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
+                </div>
 
+                <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="birth_date" class="form-label">Data de Nascimento</label>
                         <input type="date" name="birth_date" id="birth_date" class="form-control @error('birth_date') is-invalid @enderror" value="{{ old('birth_date') }}">
-                        @error('birth_date')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        @error('birth_date')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
                     <div class="col-md-6">
                         <label for="weight" class="form-label">Peso (kg)</label>
-                        <input type="number" step="0.01" name="weight" id="weight" class="form-control @error('weight') is-invalid @enderror" value="{{ old('weight') }}" placeholder="Ex: 12.50">
-                        @error('weight')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="col-md-12">
-                        <label for="observation" class="form-label">Observações Médicas / Gerais</label>
-                        <textarea name="observation" id="observation" rows="3" class="form-control @error('observation') is-invalid @enderror">{{ old('observation') }}</textarea>
-                        @error('observation')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <input type="number" step="0.01" name="weight" id="weight" class="form-control @error('weight') is-invalid @enderror" value="{{ old('weight') }}">
+                        @error('weight')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                 </div>
 
-                <div class="mt-4 d-flex justify-content-end gap-2">
-                    <a href="{{ route('animals.index') }}" class="btn btn-secondary">Cancelar</a>
-                    <button type="submit" class="btn btn-primary">Salvar Paciente</button>
+                <div class="mb-3">
+                    <label for="observation" class="form-label">Observações Médicas</label>
+                    <textarea name="observation" id="observation" rows="3" class="form-control @error('observation') is-invalid @enderror">{{ old('observation') }}</textarea>
+                    @error('observation')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
+
+                <button type="submit" class="btn btn-success">Cadastrar Paciente</button>
+                <a href="{{ route('animals.index') }}" class="btn btn-secondary">Cancelar</a>
             </form>
         </div>
     </div>
 </div>
 @endsection
-

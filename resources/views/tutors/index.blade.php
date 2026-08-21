@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Gerenciamento de tutors</h2>
+    <h2>Gerenciamento de Tutores</h2>
     <a href="{{ route('tutors.create') }}" class="btn btn-primary">Novo Tutor</a>
 </div>
 

@@ -19,9 +19,9 @@ return new class extends Migration
                 ->constrained('tutors')
                 ->cascadeOnDelete();
 
+            $table->foreignId('specie_id')->constrained('tutors')->cascadeOnDelete();
+            $table->foreignId('race_id')->nullable()->constrained('races');
             $table->string('name');
-            $table->string('specie');
-            $table->string('race')->nullable();
             $table->enum('gender', ['male', 'female']);
             $table->date('birth_date')->nullable();
             $table->decimal('weight', 5,2)->nullable();

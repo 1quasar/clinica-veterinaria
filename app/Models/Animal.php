@@ -14,8 +14,9 @@ class Animal extends Model
     protected $fillable = [
         'tutor_id',
         'name',
-        'specie',
-        'race',
+        'specie_id',
+        'race_id',
+        'gender',
         'birth_date',
         'weight',
         'observation',
@@ -27,5 +28,15 @@ class Animal extends Model
     public function tutor(): BelongsTo
     {
         return $this->belongsTo(Tutor::class, 'tutor_id');
+    }
+
+    public function specie(): BelongsTo
+    {
+        return $this->belongsTo(Specie::class, 'specie_id');
+    }
+
+    public function race(): BelongsTo
+    {
+        return $this->belongsTo(Race::class, 'race_id');
     }
 }
