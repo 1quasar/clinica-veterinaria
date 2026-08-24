@@ -22,7 +22,7 @@ class AnimalController extends Controller
             ->when($search, function ($query) use ($search) {
                 $query->where('name', 'like', "%{$search}%")
                     ->orWhereHas('specie', fn($q) => $q->where('name', 'like', "%{$search}%"))
-                    ->oorWhereHas('race', fn($q) => $q->where('name', 'like', "%{$search}%"))
+                    ->orWhereHas('race', fn($q) => $q->where('name', 'like', "%{$search}%"))
                     ->orWhereHas('tutor', fn($q) => $q->where('name', 'like', "%{$search}%"));
             })
             ->orderBy('name', 'asc')

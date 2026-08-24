@@ -30,7 +30,7 @@ class AnimalRequest extends FormRequest
             'gender'    => ['required', 'in:male,female'],
             'birth_date'    => ['nullable', 'date', 'before_or_equal:today'],
             'weight'        => ['nullable', 'numeric', 'min:0', 'max:999.99'],
-            'observations'  => ['nullable', 'string', 'max:1000'],
+            'observation'  => ['nullable', 'string', 'max:1000'],
         ];
     }
 
