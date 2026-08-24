@@ -89,9 +89,10 @@
                 form.addEventListener('submit', function (e) {
                     e.preventDefault();
 
+                    const resource = form.dataset.resource || 'este registro';
                     Swal.fire({
                         title: 'Tem certeza?',
-                        text: 'Deseja excluir esse Tutor permanentemente?',
+                        text: `Deseja excluir ${resource} permanentemente?`,
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#dc3445',
