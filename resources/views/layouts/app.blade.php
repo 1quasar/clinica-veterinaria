@@ -25,6 +25,10 @@
                     </li>
 
                     <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('consultations.*') ? 'active' : '' }}" href="{{ route('consultations.index') }}">Consultas</a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('tutors.*') ? 'active' : '' }}" href="{{ route('tutors.index') }}">Tutores</a>
                     </li>
 
