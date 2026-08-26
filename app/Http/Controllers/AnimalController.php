@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Animal;
 use App\Models\Tutor;
+use App\Models\Race;
+use App\Models\Specie;
 use App\Http\Requests\AnimalRequest;
 
 class AnimalController extends Controller
@@ -16,13 +18,12 @@ class AnimalController extends Controller
     {
         $search = $request->get('search');
 
-        $animals = Animal::with('tutor')
+        $animals = Animal::with(['tutor', 'specie', 'race'])
             ->when($search, function ($query) use ($search) {
                 $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('specie', 'like', "%{$search}%")
-                    ->orWhereHas('tutor', function ($q) use ($search) {
-                        $q->where('name', 'like', "%{$search}%");
-                    });
+                    ->orWhereHas('specie', fn($q) => $q->where('name', 'like', "%{$search}%"))
+                    ->orWhereHas('race', fn($q) => $q->where('name', 'like', "%{$search}%"))
+                    ->orWhereHas('tutor', fn($q) => $q->where('name', 'like', "%{$search}%"));
             })
             ->orderBy('name', 'asc')
             ->paginate(10)
@@ -37,7 +38,10 @@ class AnimalController extends Controller
     public function create()
     {
         $tutors = Tutor::orderBy('name', 'asc')->get();
-        return view('animals.create', compact('tutors'));
+        $species = Specie::orderBy('name', 'asc')->get();
+        $races = Race::orderBy('name', 'asc')->get();
+
+        return view('animals.create', compact('tutors', 'species', 'races'));
     }
 
     /**
@@ -57,7 +61,7 @@ class AnimalController extends Controller
      */
     public function show(Animal $animal)
     {
-        $animal->load('tutor');
+        $animal->load(['tutor', 'specie', 'race']);
         return view('animals.show', compact('animal'));
     }
 
@@ -67,7 +71,10 @@ class AnimalController extends Controller
     public function edit(Animal $animal)
     {
         $tutors = Tutor::orderBy('name', 'asc')->get();
-        return view('animals.edit', compact('animal', 'tutors'));
+        $species = Specie::orderBy('name', 'asc')->get();
+        $races = Race::orderBy('name', 'asc')->get();
+
+        return view('animals.edit', compact('animal', 'tutors', 'species', 'races'));
     }
 
     /**

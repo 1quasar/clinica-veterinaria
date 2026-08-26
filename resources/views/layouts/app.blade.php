@@ -25,11 +25,27 @@
                     </li>
 
                     <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('consultations.*') ? 'active' : '' }}" href="{{ route('consultations.index') }}">Consultas</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('exams.*') ? 'active' : '' }}" href="{{ route('exams.index') }}">Exames</a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('tutors.*') ? 'active' : '' }}" href="{{ route('tutors.index') }}">Tutores</a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('animals.*') ? 'active' : '' }}" href="{{ route('animals.index') }}">Animais</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('species.*') ? 'active' : '' }}" href="{{ route('species.index') }}">Espécies</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('races.*') ? 'active' : '' }}" href="{{ route('races.index') }}">Raças</a>
                     </li>
 
 
@@ -81,9 +97,10 @@
                 form.addEventListener('submit', function (e) {
                     e.preventDefault();
 
+                    const resource = form.dataset.resource || 'este registro';
                     Swal.fire({
                         title: 'Tem certeza?',
-                        text: 'Deseja excluir esse Tutor permanentemente?',
+                        text: `Deseja excluir ${resource} permanentemente?`,
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#dc3445',
