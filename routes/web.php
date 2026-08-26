@@ -10,6 +10,7 @@ use App\Http\Controllers\SpecieController;
 use App\Http\Controllers\RaceController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\Api\DropdownController;
+use App\Http\Controllers\ExamController;
 
 
 // Redirecionamentos da raiz
@@ -57,6 +58,10 @@ Route::middleware(['auth', 'user.active'])->group(function () {
 
     Route::resource('consultations', ConsultationController::class)->parameters([
         'consultations' => 'consultation'
+    ]);
+
+    Route::resource('exams', ExamController::class)->parameters([
+        'exams' => 'exam'
     ]);
 
     // Rotas para AJAX/Fetch API interna
