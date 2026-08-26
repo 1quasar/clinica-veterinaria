@@ -8,17 +8,9 @@
     "devDependencies": {
         "axios": "^1.6.4",
         "laravel-vite-plugin": "^1.0.0",
-<<<<<<< HEAD
         "vite": "^8.2.2"
-=======
-        "vite": "^5.0.0"
->>>>>>> 243c622171fde0fe2ef6d2a92cb6f0d14d2570c7
     },
     "dependencies": {
         "bootstrap": "^5.3.3"
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 243c622171fde0fe2ef6d2a92cb6f0d14d2570c7
