@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center my-4">
         <h1 class="h3 text-gray-800">Painel Gerencial</h1>
         <span class="badge bg-primary fs-6">
-            <i class="bi bi-calendar-check"></i> {{ \Carbon\Carbon::now()->translatedFormat('l, d \d\e F \d\e Y') }}
+            <i class="bi bi-calendar-check"></i> {{ \Carbon\Carbon::now()->locale('pt_BR')->translatedFormat('l, d \d\e F \d\e Y') }}
         </span>
     </div>
 
@@ -124,14 +124,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($consultationOfDay as $consulta)
+                        @forelse($consultationOfDay as $consultation)
                             <tr>
-                                <td class="fw-bold">{{ $consulta->data_hora->format('H:i') }}</td>
-                                <td>{{ $consulta->animal->nome }}</td>
-                                <td>{{ $consulta->animal->tutor->nome }}</td>
-                                <td>{{ $consulta->veterinario->name }}</td>
+                                <td class="fw-bold">{{ $consultation->date_time->format('H:i') }}</td>
+                                <td>{{ $consultation->animal->name }}</td>
+                                <td>{{ $consultation->animal->tutor->name }}</td>
+                                <td>{{ $consultation->veterinarian->name }}</td>
                                 <td>
-                                    @switch($consulta->status)
+                                    @switch($consultation->status)
                                         @case('agendada')
                                             <span class="badge bg-warning text-dark">Agendada</span>
                                             @break
@@ -147,7 +147,7 @@
                                     @endswitch
                                 </td>
                                 <td class="text-end">
-                                    <a href="{{ route('consultations.edit', $consulta) }}" class="btn btn-sm btn-outline-primary">
+                                    <a href="{{ route('consultations.edit', $consultation) }}" class="btn btn-sm btn-outline-primary">
                                         Atender / Editar
                                     </a>
                                 </td>
@@ -167,13 +167,13 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Configuração do Gráfico de linhas/barra - Consultas por mês
-        const ctxConsultation = document.getElementById('chartConsultation').getContext('2d');
+        // 1. Gráfico de Evolução de Consultas
+        const ctxConsultas = document.getElementById('chartConsultas').getContext('2d');
         new Chart(ctxConsultas, {
             type: 'bar',
             data: {
                 labels: @json($labelsMonths),
-                datasets = [{
+                datasets: [{
                     label: 'Total de Consultas',
                     data: @json($dataAppointments),
                     backgroundColor: 'rgba(13, 110, 253, 0.7)',
@@ -194,16 +194,15 @@
             }
         });
 
-        // Configuração do Gráfico de Rosca/Donut - Animais por Espécie
-        const ctxSpecies = document.getElementById('chatsSpecies').getContext('2d');
-
+        // 2. Gráfico de Pacientes por Espécie
+        const ctxSpecies = document.getElementById('chartEspecies').getContext('2d');
         new Chart(ctxSpecies, {
             type: 'doughnut',
             data: {
                 labels: @json($labelsSpecies),
                 datasets: [{
                     data: @json($speciesData),
-                    backgroundColor: [´
+                    backgroundColor: [
                         '#0d6efd',
                         '#198754',
                         '#ffc107',

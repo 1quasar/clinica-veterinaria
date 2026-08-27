@@ -27,6 +27,7 @@ class DashboardController extends Controller
         // Tabela de próximas Consultas do Dia Atual (max 5 registros)
         $consultationOfDay = Consultation::with(['animal.tutor', 'veterinarian'])
             ->whereDate('date_time', Carbon::today())
+            ->whereIn('status', ['agendada', 'em_andamento'])
             ->orderBy('date_time', 'desc')
             ->take(5)
             ->get();
