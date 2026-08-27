@@ -97,10 +97,11 @@
 
         <!-- Conteúdo Principal + Topbar -->
         <div class="main-wrapper d-flex flex-column min-vh-100">
-            <!-- Header / Topbar Superior -->
+            
+            <!-- Header / Topbar Superior (Exibido apenas se autenticado) -->
+            @auth
             <header class="navbar navbar-expand bg-white border-bottom px-4 py-2 shadow-sm sticky-top">
                 <div class="container-fluid p-0 justify-content-end">
-                    @auth
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle d-flex align-items-center gap-2 border-0" 
                                 type="button" 
@@ -128,18 +129,19 @@
                             </li>
                         </ul>
                     </div>
-                    @endauth
                 </div>
             </header>
+            @endauth
 
-            <!-- Área de Exibição das Views -->
-            <main class="flex-grow-1 p-4">
-                <div class="container-fluid">
+            <!-- Área de Exibição das Views (Padding apenas quando logado) -->
+            <main class="flex-grow-1 {{ auth()->check() ? 'p-4' : 'p-0' }}">
+                <div class="{{ auth()->check() ? 'container-fluid' : '' }}">
                     @yield('content')
                 </div>
             </main>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
