@@ -13,6 +13,7 @@ class Certificate extends Model
 
     protected $fillable = [
         'animal_id',
+        'certificate_id',
         'title',
         'issue_date',
         'file_path',
