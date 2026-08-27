@@ -53,13 +53,12 @@ class DashboardController extends Controller
         }
 
         // Gráfico 2: Distribuição de Animais por Espécie
-        $animalsBySpecie = Specie::select('name', DB::raw('count(*) as total'))
-            ->groupBy('name')
-            ->orderBy('total', 'desc')
+        $animalsBySpecie = Specie::withCount('animals')
+            ->orderBy('animals_count', 'desc')
             ->get();
 
         $labelsSpecies = $animalsBySpecie->pluck('name')->toArray();
-        $speciesData = $animalsBySpecie->pluck('total')->toArray();
+        $speciesData = $animalsBySpecie->pluck('animals_count')->toArray();
         
 
         return view('dashboard', compact(
