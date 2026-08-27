@@ -21,7 +21,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                        <a class="nav-link {{request()->routeIs('dashboard') ? 'active' : ''}}" href="{{ route('dashboard') }}">Dashboard</a>
                     </li>
 
                     <li class="nav-item">

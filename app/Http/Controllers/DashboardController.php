@@ -2,17 +2,75 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
+// use Illuminate\Http\Request;
+use App\Models\Animal;
+// use App\Models\Exam;
+use App\Models\Consultation;
+use App\Models\Specie;
+use App\Models\Tutor;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index()
     {
+        // 1. Indicadores Principais
+        $totalTutors = Tutor::count();
+        $totalAnimals = Animal::count();
+        $todayAppointments = Consultation::whereDate('date_time', Carbon::today())->count();
+        $monthRevenue = Consultation::whereMonth('date_time', Carbon::now()->month)
+            ->whereYear('date_time', Carbon::now()->year)
+            ->where('status', 'concluida')
+            ->sum('value');
+        
+        // Tabela de próximas Consultas do Dia Atual (max 5 registros)
+        $consultationOfDay = Consultation::with(['animal.tutor', 'veterinarian'])
+            ->whereDate('date_time', Carbon::today())
+            ->orderBy('date_time', 'desc')
+            ->take(5)
+            ->get();
 
-        $totalUsuarios = User::count();
-        $usuariosAtivos = User::where('status', true)->count();
+        // Gráfico 1: Volume de consultas dos últimos 6 meses
+        $montlyAppointments = Consultation::select(
+            DB::raw('MONTH(date_time) as mes'),
+            DB::raw('YEAR(date_time) as ano'),
+            DB::raw('count(*) as total')
+        )
+            ->where('date_time', '>=', Carbon::now()->subMonths(5)->startOfMonth())
+            ->groupBy('ano', 'mes')
+            ->orderBy('ano', 'asc')
+            ->orderBy('mes', 'asc')
+            ->get();
 
-        return view('dashboard', compact('totalUsuarios', 'usuariosAtivos'));
+        $labelsMonths = [];
+        $dataAppointments = [];
+
+        foreach($montlyAppointments as $appointment) {
+            $labelsMonths[] = Carbon::createFromDate($appointment->ano, $appointment->mes, 1)->translatedFormat('M/Y');
+            $dataAppointments[] = $appointment->total;
+        }
+
+        // Gráfico 2: Distribuição de Animais por Espécie
+        $animalsBySpecie = Specie::select('name', DB::raw('count(*) as total'))
+            ->groupBy('name')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        $labelsSpecies = $animalsBySpecie->pluck('name')->toArray();
+        $speciesData = $animalsBySpecie->pluck('total')->toArray();
+        
+
+        return view('dashboard', compact(
+            'totalTutors',
+            'totalAnimals',
+            'todayAppointments',
+            'monthRevenue',
+            'dataAppointments',
+            'consultationOfDay',
+            'labelsMonths',
+            'labelsSpecies',
+            'speciesData'
+        ));
     }
 }
