@@ -80,6 +80,11 @@
                         <i class="bi bi-bookmark-star me-2"></i> Raças
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('reports.index') }}" class="nav-link {{ request()->routeIs('reports.*') ? 'active' : '' }}">
+                        <i class="bi bi-file-earmark-pdf"></i> Relatórios
+                    </a>
+                </li>
 
                 @if(auth()->user()->role === 'admin')
                 <li class="nav-item mt-2">
