@@ -29,7 +29,7 @@
                         <select name="consultation_id" id="consultation_id" class="form-select @error('consultation_id') is-invalid @enderror">
                             <option value="">-- Nenhuma / Exame Avulso --</option>
                             @foreach($consultations as $consultation)
-                                <option value="{{ $consulta->id }}" {{ old('consultation_id') == $consultation->id ? 'selected' : '' }}>
+                                <option value="{{ $consultation->id }}" {{ old('consultation_id') == $consultation->id ? 'selected' : '' }}>
                                     Consulta #{{ $consultation->id }} - {{ $consultation->animal->name }} ({{ $consultation->date_time->format('d/m/Y') }})
                                 </option>
                             @endforeach

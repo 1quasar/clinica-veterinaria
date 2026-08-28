@@ -11,7 +11,7 @@ use App\Http\Controllers\RaceController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\Api\DropdownController;
 use App\Http\Controllers\ExamController;
-
+use App\Http\Controllers\ReportController;
 
 // Redirecionamentos da raiz
 Route::get('/', function () {
@@ -70,7 +70,10 @@ Route::middleware(['auth', 'user.active'])->group(function () {
 
         Route::get('/species/{specie}/races', [DropdownController::class, 'racesBySpecie'])->name('api.races');
     });
-   
+
+    // Módulos de Relatórios
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/pdf', [ReportController::class, 'exportPdf'])->name('reports.pdf');
 });
 
 
