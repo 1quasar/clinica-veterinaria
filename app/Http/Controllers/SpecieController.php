@@ -67,7 +67,7 @@ class SpecieController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Specie $destroy)
+    public function destroy(Specie $specie)
     {
         if ($specie->animals()->exists()) {
             return back()

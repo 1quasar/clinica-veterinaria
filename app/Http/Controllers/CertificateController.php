@@ -50,4 +50,9 @@ class CertificateController extends Controller
             ->with('success', 'Atestado Médico cadastrado e arquivo anexado com sucesso!');
     }
     
+    public function show(Certificate $certificate)
+    {
+        $certificate->load(['animal.tutor']);
+        return view('certificates.show', compact('certificate'));
+    }
 }
