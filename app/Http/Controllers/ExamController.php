@@ -83,7 +83,7 @@ class ExamController extends Controller
 
         return redirect()
             ->route('exams.index')
-            ->with('success', 'Dados do exame e anexo atualizado com sucesso!');
+            ->with('success', 'Dados do exame e anexo atualizados com sucesso!');
         
     }
 

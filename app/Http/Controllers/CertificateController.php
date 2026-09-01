@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Certificate;
 use App\Models\Animal;
 use App\Http\Requests\CertificateRequest;
-use App\Models\Consultation;
 use Illuminate\Support\Facades\Storage;
 
 class CertificateController extends Controller
@@ -32,7 +31,7 @@ class CertificateController extends Controller
     {
         $animals = Animal::with('tutor')->orderBy('name', 'asc')->get();
 
-        return view('certificates.create', compact('animals', 'certificates'));
+        return view('certificates.create', compact('animals'));
     }
 
         public function store(CertificateRequest $request)
@@ -54,5 +53,43 @@ class CertificateController extends Controller
     {
         $certificate->load(['animal.tutor']);
         return view('certificates.show', compact('certificate'));
+    }
+
+    public function edit(Certificate $certificate)
+    {
+        $animals = Animal::with('tutor')->orderBy('name', 'asc')->get();
+
+        return view('certificates.edit', compact('certificate', 'animals'));
+    }
+
+    public function update(CertificateRequest $request, Certificate $certificate)
+    {
+        $data = $request->validated();
+
+        if ($request->hasFile('file')) {
+            if ($certificate->file_path && Storage::disk('public')->exists($certificate->file_path)) {
+                Storage::disk('public')->delete($certificate->file_path);
+            }
+            $data['file_path'] = $request->file('file')->store('certificates', 'public');
+        }
+
+        $certificate->update($data);
+
+        return redirect()
+            ->route('certificates.index')
+            ->with('success', 'Atestado Médico e arquivo anexo atualizados com sucesso!');
+    }
+
+    public function destroy(Certificate $certificate)
+    {
+        if ($certificate->file_path && Storage::disk('public')->exists($certificate->file_path)) {
+            Storage::disk('public')->delete($certificate->file_path);
+        }
+
+        $certificate->delete();
+
+        return redirect()
+            ->route('certificates.index')
+            ->with('success', 'Atestado Médico e arquivo anexo excluídos com sucesso!');
     }
 }

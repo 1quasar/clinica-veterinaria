@@ -11,6 +11,7 @@ use App\Http\Controllers\RaceController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\Api\DropdownController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\CertificateController;
 
 
 // Redirecionamentos da raiz
@@ -62,6 +63,10 @@ Route::middleware(['auth', 'user.active'])->group(function () {
 
     Route::resource('exams', ExamController::class)->parameters([
         'exams' => 'exam'
+    ]);
+
+    Route::resource('certificates', CertificateController::class)->parameters([
+        'certificates' => 'certificate'
     ]);
 
     // Rotas para AJAX/Fetch API interna

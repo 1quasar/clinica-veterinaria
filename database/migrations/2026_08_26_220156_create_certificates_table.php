@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('animal_id')->contrained('animals')->cascadeOnDelete();
 
             // Dados do Atestado Médico
-            $table->string('name');
+            $table->string('title');
             $table->date('issue_date');
             $table->string('file_path');
             $table->text('notes')->nullable();

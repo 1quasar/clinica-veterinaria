@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Override;
 
 class CertificateRequest extends FormRequest
 {
@@ -13,7 +12,7 @@ class CertificateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,10 +23,10 @@ class CertificateRequest extends FormRequest
     public function rules(): array
     {
         $fileRule = $this->isMethod('post')
-            ? ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120']
-            : ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'];
+            ? ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:2048']
+            : ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:2048'];
         return [
-            'animal_id'     => ['required', 'exists:animals_'],
+            'animal_id'     => ['required', 'exists:animals,id'],
             'title'         => ['required', 'string', 'max:255'],
             'issue_date'    => ['required', 'date', 'before_or_equal:today'],
             'file'          => $fileRule,
@@ -35,7 +34,6 @@ class CertificateRequest extends FormRequest
         ];
     }
 
-    #[Override]
     public function messages(): array
     {
         return [
