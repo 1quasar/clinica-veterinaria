@@ -11,7 +11,10 @@ use App\Http\Controllers\RaceController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\Api\DropdownController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\ReceitaController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\VacinaController;
+use App\Models\Vacina;
 
 // Redirecionamentos da raiz
 Route::get('/', function () {
@@ -74,6 +77,19 @@ Route::middleware(['auth', 'user.active'])->group(function () {
     // Módulos de Relatórios
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/reports/pdf', [ReportController::class, 'exportPdf'])->name('reports.pdf');
+
+
+    // Módulo de Vacinas
+    Route::get('/vacinas', [VacinaController::class, 'index'])->name('vacinas.index');
+    Route::get('/animais/{animal}/vacinas/create', [VacinaController::class, 'create'])->name('vacinas.create');
+    Route::post('/vacinas', [VacinaController::class, 'store'])->name('vacinas.store');
+
+    // Módulo de Receitas
+    Route::get('/receitas', [ReceitaController::class, 'index'])->name('receitas.index');
+    Route::get('/animais/{animal}/receitas/create', [ReceitaController::class, 'create'])->name('receitas.create');
+    Route::post('/receitas', [ReceitaController::class, 'store'])->name('receitas.store');
+    Route::get('/receitas/{receita}', [ReceitaController::class, 'show'])->name('receitas.show');
+
 });
 
 

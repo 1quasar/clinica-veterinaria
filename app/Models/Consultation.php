@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Consultation extends Model
 {
@@ -34,5 +35,10 @@ class Consultation extends Model
     public function veterinarian(): BelongsTo
     {
         return $this->belongsTo(User::class, 'veterinarian_id');
+    }
+
+    public function receitas(): HasMany
+    {
+        return $this->hasMany(Receita::class, 'consulta_id');
     }
 }
