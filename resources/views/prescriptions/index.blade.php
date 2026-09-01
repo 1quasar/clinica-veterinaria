@@ -1,18 +1,21 @@
 @extends('layouts.app') 
- 
+
 @section('content') 
 <div class="container-fluid px-4"> 
     <div class="d-flex justify-content-between align-items-center my-4"> 
-        <h1 class="h3 text-gray-800">Livro de Registro de Receitas</h1> 
+        <h1 class="h3 text-gray-800 mb-0">Livro de Registro de Receitas</h1> 
+        <a href="{{ route('prescriptions.create', 'animal') }}" class="btn btn-primary">
+            <i class="bi bi-plus-lg me-1"></i> Nova Receita
+        </a>
     </div> 
- 
+
     <div class="card shadow mb-4"> 
         <div class="card-body"> 
             <form action="{{ route('prescriptions.index') }}" method="GET" class="d-flex gap-2 mb-3"> 
                 <input type="text" name="search" class="form-control" placeholder="Pesquisar por paciente..." value="{{ $search ?? '' }}"> 
                 <button type="submit" class="btn btn-secondary">Pesquisar</button> 
             </form> 
- 
+
             <div class="table-responsive"> 
                 <table class="table table-striped table-hover align-middle"> 
                     <thead class="table-dark"> 

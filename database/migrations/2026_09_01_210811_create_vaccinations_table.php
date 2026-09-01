@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vacinas', function (Blueprint $table) {
+        Schema::create('vaccinations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('animal_id')->constrained('animals')->cascadeOnDelete();
-            $table->foreignId('veterinario_id')->constrained('users');
-            $table->string('nome');
-            $table->date('data_aplicacao');
-            $table->date('data_proxima_dose')->nullable();
-            $table->string('lote')->nullable();
-            $table->string('fabricante')->nullable();
-            $table->text('observacoes')->nullable();
+            $table->foreignId('veterinarian_id')->constrained('users');
+            $table->string('name');
+            $table->date('application_date');
+            $table->date('next_dose_date')->nullable();
+            $table->string('batch')->nullable();
+            $table->string('manufacturer')->nullable();
+            $table->text('observations')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vacinas');
+        Schema::dropIfExists('vaccinations');
     }
 };
