@@ -53,7 +53,13 @@ class ConsultationController extends Controller
 
     public function show(Consultation $consultation)
     {
-        $consultation->load(['animal.tutor', 'animal.specie', 'animal.race', 'veterinarian']);
+        $consultation->load([
+            'animal.tutor',
+            'animal.specie',
+            'animal.race',
+            'veterinarian',
+            'receitas.itens'
+        ]);
 
         return view('consultations.show', compact('consultation'));
     }

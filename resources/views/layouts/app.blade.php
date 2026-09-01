@@ -56,6 +56,16 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('vaccinations.index') }}" class="nav-link {{ request()->routeIs('vaccinations.*') ? 'active' : '' }}">
+                        <i class="bi bi-shield-plus me-2"></i> Vacinações
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('prescriptions.index') }}" class="nav-link {{ request()->routeIs('prescriptions.*') ? 'active' : '' }}">
+                        <i class="bi bi-journal-medical me-2"></i> Receitas Médicas
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('exams.index') }}" class="nav-link {{ request()->routeIs('exams.*') ? 'active' : '' }}">
                         <i class="bi bi-file-earmark-medical me-2"></i> Exames
                     </a>

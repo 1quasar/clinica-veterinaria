@@ -11,6 +11,7 @@
     </div>
 
     <div class="row">
+        {{-- Card: Paciente e Tutor --}}
         <div class="col-md-6">
             <div class="card shadow mb-4">
                 <div class="card-header bg-primary text-white">
@@ -27,6 +28,7 @@
             </div>
         </div>
 
+        {{-- Card: Detalhes do Agendamento --}}
         <div class="col-md-6">
             <div class="card shadow mb-4">
                 <div class="card-header bg-info text-white">
@@ -37,19 +39,20 @@
                         <tr><th>Data / Hora:</th><td class="fw-bold">{{ $consultation->date_time->format('d/m/Y \à\s H:i') }}</td></tr>
                         <tr><th>Veterinário:</th><td>{{ $consultation->veterinarian->name }}</td></tr>
                         <tr><th>Status:</th><td><span class="badge bg-secondary">{{ ucfirst($consultation->status) }}</span></td></tr>
-                        <tr><th>Valor:</th><td>R$ {{ number_format($consultation->vale, 2, ',', '.') }}</td></tr>
+                        <tr><th>Valor:</th><td>R$ {{ number_format($consultation->value, 2, ',', '.') }}</td></tr>
                     </table>
                 </div>
             </div>
         </div>
 
+        {{-- Card: Prontuário Médico --}}
         <div class="col-md-12">
             <div class="card shadow mb-4">
                 <div class="card-header bg-dark text-white">
                     <h5 class="card-title mb-0">Prontuário Médico</h5>
                 </div>
                 <div class="card-body">
-                    <h6><strong>Motivo da consultation:</strong></h6>
+                    <h6><strong>Motivo da Consulta:</strong></h6>
                     <p class="text-muted">{{ $consultation->reason }}</p>
                     <hr>
 
@@ -57,8 +60,69 @@
                     <p class="text-muted">{{ $consultation->diagnosis ?? 'Nenhum diagnóstico registrado.' }}</p>
                     <hr>
 
-                    <h6><strong>Prescrição / Tratamento:</strong></h6>
+                    <h6><strong>Prescrição / Tratamento Geral:</strong></h6>
                     <p class="text-muted">{{ $consultation->prescription ?? 'Nenhuma prescrição informada.' }}</p>
+                </div>
+            </div>
+        </div>
+
+        {{-- Card: Receitas e Medicamentos Emitidos --}}
+        <div class="col-md-12">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Receitas Médicas Emitidas</h5>
+                    <a href="{{ route('receitas.create', ['animal' => $consultation->animal->id, 'consulta_id' => $consultation->id]) }}" class="btn btn-sm btn-light text-success fw-bold">
+                        + Emitir Nova Receita
+                    </a>
+                </div>
+                <div class="card-body">
+                    @if($consultation->receitas && $consultation->receitas->isNotEmpty())
+                        @foreach($consultation->receitas as $receita)
+                            <div class="border rounded p-3 mb-4 bg-light">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <h6 class="fw-bold mb-1 text-primary">Receita #{{ $receita->id }}</h6>
+                                        <small class="text-muted">Data de Emissão: {{ \Carbon\Carbon::parse($receita->data)->format('d/m/Y') }}</small>
+                                    </div>
+                                    <a href="{{ route('receitas.show', $receita) }}" class="btn btn-sm btn-outline-primary" target="_blank">
+                                        Ver / Imprimir
+                                    </a>
+                                </div>
+
+                                @if($receita->observacoes)
+                                    <p class="small text-muted mb-2"><strong>Observações:</strong> {{ $receita->observacoes }}</p>
+                                @endif
+
+                                <h6 class="fw-bold mt-3 mb-2">Medicamentos Prescritos:</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-bordered bg-white align-middle mb-0">
+                                        <thead class="table-secondary">
+                                            <tr>
+                                                <th>Medicamento</th>
+                                                <th>Dosagem</th>
+                                                <th>Frequência</th>
+                                                <th>Duração</th>
+                                                <th>Orientações</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($receita->itens as $item)
+                                                <tr>
+                                                    <td class="fw-bold text-dark">{{ $item->medicamento }}</td>
+                                                    <td>{{ $item->dosagem }}</td>
+                                                    <td>{{ $item->frequencia }}</td>
+                                                    <td>{{ $item->duracao }}</td>
+                                                    <td>{{ $item->orientacoes ?? '-' }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <p class="text-muted mb-0">Nenhuma receita foi emitida/vinculada a esta consulta.</p>
+                    @endif
                 </div>
             </div>
         </div>
