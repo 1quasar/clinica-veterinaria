@@ -71,6 +71,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('certificates.index') }}" class="nav-link {{ request()->routeIs('certificates.*') ? 'active' : '' }}">
+                        <i class="bi bi-file-earmark-medical me-2"></i> Atestados
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('tutors.index') }}" class="nav-link {{ request()->routeIs('tutors.*') ? 'active' : '' }}">
                         <i class="bi bi-people me-2"></i> Tutores
                     </a>

@@ -12,6 +12,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SpecieController;
 use App\Http\Controllers\TutorController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\VaccinationController;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +62,10 @@ Route::middleware(['auth', 'user.active'])->group(function () {
 
     Route::resource('exams', ExamController::class)->parameters([
         'exams' => 'exam'
+    ]);
+
+    Route::resource('certificates', CertificateController::class)->parameters([
+        'certificates' => 'certificate'
     ]);
 
     // Rotas para AJAX/Fetch API interna

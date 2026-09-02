@@ -31,7 +31,7 @@ class ExamRequest extends FormRequest
            'name'               => ['required', 'string', 'max:255'],
            'exam_date'          => ['required', 'date', 'before_or_equal:today'],
            'laboratory'         => ['nullable', 'string', 'max:255'],
-           'file'          => $fileRule,
+           'file'               => $fileRule,
            'observations'       => ['nullable', 'string', 'max:1000'],  
         ];
     }
