@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\RaceController;
 use App\Http\Controllers\ReportController;
@@ -83,4 +84,7 @@ Route::middleware(['auth', 'user.active'])->group(function () {
         Route::resource('vaccinations', VaccinationController::class)->only(['index', 'create', 'store']);
         Route::resource('prescriptions', PrescriptionController::class)->only(['index', 'create', 'store', 'show']);
     });
+
+    // Rotas para Histórico do Paciente
+    Route::get('/animals/{animal}/history', [HistoryController::class, 'show'])->name('animals.history');
 });
