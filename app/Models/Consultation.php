@@ -37,8 +37,8 @@ class Consultation extends Model
         return $this->belongsTo(User::class, 'veterinarian_id');
     }
 
-    public function receitas(): HasMany
+    public function prescriptions(): HasMany
     {
-        return $this->hasMany(Receita::class, 'consulta_id');
+        return $this->hasMany(Prescription::class, 'consulta_id');
     }
 }

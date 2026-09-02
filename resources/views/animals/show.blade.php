@@ -6,6 +6,7 @@
         <h2>Prontuário do Paciente: {{ $animal->name }}</h2>
         <div>
             <a href="{{ route('animals.edit', $animal) }}" class="btn btn-warning">Editar</a>
+            <a href="{{ route('animals.history', $animal->id) }}" class="btn btn-info">Histórico do Paciente</a>
             <a href="{{ route('animals.index') }}" class="btn btn-secondary">Voltar</a>
         </div>
     </div>
