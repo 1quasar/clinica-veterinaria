@@ -6,7 +6,6 @@ use App\Models\Animal;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use PHPUnit\Event\Test\Finished;
 
 class HistoryController extends Controller
 {
