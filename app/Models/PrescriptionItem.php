@@ -14,7 +14,7 @@ class PrescriptionItem extends Model
         'dosage',
         'frequency',
         'duration',
-        'guidelines'
+        'guidelines',
     ];
 
     public function prescription(): BelongsTo
