@@ -49,7 +49,7 @@ class HistoryController extends Controller
         }
 
         // Processamento de Normalização de Exames
-        if (!$registerType || $registerType === 'exams') {
+        if (!$registerType || $registerType === 'exame') {
             foreach ($animal->exams as $exam) {
                 $eventDate = Carbon::parse($exam->exam_date)->toDateString();
 

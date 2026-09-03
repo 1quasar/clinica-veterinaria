@@ -63,7 +63,7 @@
                                     <div>
                                         @if($event['type'] === 'consulta')
                                             <span class="badge bg-primary px-2 py-1">Consulta</span>
-                                        @elseif($event['type' === 'exame'])
+                                        @elseif($event['type'] === 'exame')
                                             <span class="badge bg-info text-dark px-2 py-1">Exame</span>
                                         @elseif($event['type'] === 'vacina')
                                             <span class="badge bg-success px-2 py-1">Vacinação</span>
@@ -107,7 +107,7 @@
 
                                         <p class="mb-0 text-success small">
                                             <strong>Retorno / Próxima Dose: </strong>
-                                            {{ $event['data']->next_dose_date ? date('d/m/Y', strtotime($event['data']->next_dose_date)) : 'Dose Única / Concluído' }}
+                                            {{ !empty($event['data']->next_dose_date) ? date('d/m/Y', strtotime($event['data']->next_dose_date)) : 'Dose Única / Concluído' }}
                                         </p>
                                     @elseif($event['type'] === 'receita')
                                         <span class="fw bold d-block mb-1 text-secondary">

@@ -24,7 +24,6 @@ class VaccinationRequest extends FormRequest
     {
         return [
             'animal_id'          => ['required', 'exists:animals,id'],
-            'veterinarian_id'    => ['required', 'exists:users,id'],
             'name'               => ['required', 'string', 'max:255'],
             'application_date'   => ['required', 'date', 'before_or_equal:today'],
             'next_dose_date'     => ['nullable', 'date', 'after:application_date'],
@@ -39,8 +38,6 @@ class VaccinationRequest extends FormRequest
         return [
             'animal_id.required'        => 'Selecione o paciente (animal).',
             'animal_id.exists'          => 'O paciente selecionado é inválido.',
-            'veterinarian_id.required'  => 'Selecione o veterinário responsável.',
-            'veterinarian_id.exists'    => 'O veterinário selecionado é inválido.',
             'name.required'             => 'O nome da vacinação é obrigatório.',
             'application_date.required' => 'Informe a data de aplicação da vacinação.',
             'application_date.before_or_equal' => 'A data de aplicação não pode ser futura.',
