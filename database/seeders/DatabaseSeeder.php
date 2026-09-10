@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use Database\Seeders\AnimalSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -20,6 +20,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             SpecieRaceSeeder::class,
+            SpecieSeeder::class,
+            TutorSeeder::class,
+            AnimalSeeder::class,
         ]);
     }
 }
