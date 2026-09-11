@@ -12,7 +12,7 @@ class AnimalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $search = $request->get('search');
 
@@ -36,7 +36,7 @@ class AnimalController extends Controller
         /**
      * Store a newly created resource in storage.
      */
-    public function store(AnimalRequest $request)
+    public function store(AnimalRequest $request): JsonResponse
     {
         $animal = Animal::create($request->validated());
 
@@ -48,32 +48,47 @@ class AnimalController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id): JsonResponse
     {
-        //
+        $animal = Animal::with(['tutor', 'specie', 'race'])->findOrFail($id);
+        
+        return response()->json($animal);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id): JsonResponse
     {
-        //
+        $animal = Animal::findOrFail($id);
+
+        return response()->json($animal);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $id): JsonResponse
     {
-        //
+        $animal = Animal::findOrFail($id);
+        $animal->update($request->all());
+
+        return response()->json([
+            'message' => 'Animal updated successfully',
+            'animal' => $animal
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id): JsonResponse
     {
-        //
+        $animal = Animal::findOrFail($id);
+        $animal->delete();
+
+        return response()->json([
+            'message' => 'Animal deleted successfully'
+        ]);
     }
 }

@@ -23,16 +23,54 @@ class UserController extends Controller
         return response()->json($users);
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(UserRequest $request): JsonResponse
     {
-        $user = User::create([
-            'name'      => $request->name,
-            'email'     => $request->email,
-            'password'  => $request->password,
-            'role'      => $request->role,
-            'status'    => $request->status,
-        ]);
+        $user = User::create($request->validated());
 
-        return response()->json($user, 201);
+        return response()->json([
+            $user
+        ]);
+    }
+
+    public function show(int $id): JsonResponse
+    {
+        $user = User::findOrFail($id);
+
+        return response()->json($user);
+    }
+
+    public function edit(int $id): JsonResponse
+    {
+        $user = User::findOrFail($id);
+
+        return response()->json($user);
+    }
+
+    public function update(Request $request, int $id): JsonResponse
+    {
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+
+        return response()->json([
+            'message' => 'User updated successfully',
+            'user' => $user
+        ]);
+    }
+
+    public function destroy(int $id): JsonResponse
+    {
+        $user = User::findOrFail($id);
+        
+        if (Auth::id() === $id) {
+            return response()->json([
+                'message' => 'Você não pode excluir seu própio usuário!'
+            ], 403);
+        }
+
+        $user->delete();
+
+        return response()->json([
+            'message' => 'User deleted successfully'
+        ]);
     }
 }
